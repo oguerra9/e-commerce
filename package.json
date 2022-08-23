@@ -1,7 +1,7 @@
 {
-  "name": "module-13-challenge-orm",
+  "name": "e-commerce",
   "version": "1.0.0",
-  "description": "",
+  "description": "back-end program to run e-commerce site",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@work.github.com:coding-boot-camp/module-13-challenge-orm.git"
+    "url": "git@github.com:oguerra9/e-commerce.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Olivia Guerra",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.3"
