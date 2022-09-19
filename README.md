@@ -4,3 +4,5 @@ After downloading the code from the repository, the dependencies must be install
 
 ## Usage
 After downloading the source code and installing all dependencies, the user must run the app on their local server using node. This app is a backend app only, meaning there is no GUI for the user to interact with. However, the routes and actions may still be implemented using an API platform such as Insomnia, or Postman. The user can send requests to interact with the e-commerce database. The database includes tables outlining the categories, products, and tags of the e-commerce data. Requests can be performed to view all rows, view one specific role, create a row, update a row, or delete a row of the category, product, and tag tables. When a category's data is retrieved, a list of the products associated with the category's id is also returned. When a product's data is retrieved, a list of the tags associated with the product's id is also returned. When a tag's data is retrieved, a list of products associated with that tag's id is also returned.
+
+[Video Demo of App](https://drive.google.com/file/d/1WTk7edwwKNgeDX53oaZAqaUzcVusR7yB/view)

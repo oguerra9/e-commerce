@@ -23,9 +23,10 @@ router.get('/:id', async (req, res) => {
     const tagData = await Tag.findByPk(req.params.id, {
       include: [{ model: Product }],
     });
-    res.status(200).json(tagData);
     if (!tagData) {
-      res.status(404).json({ message: 'Tag could not be found by this id'});
+      res.status(404).json({ message: 'Tag could not be found'});
+    } else {
+      res.status(200).json(tagData);
     }
     
   } catch (err) {
@@ -38,10 +39,11 @@ router.post('/', (req, res) => {
   Tag.create(req.body)
     .then((tag) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
-      if (req.body.productIds.length) {
-        const productTagIdArr = req.body.productIds.map((product_id) => {
+      if (req.body.products) {
+        let productsArr = JSON.parse(req.body.products);
+        const productTagIdArr = productsArr.map((product_id) => {
           return {
-            tag_id: tag_id,
+            tag_id: tag.id,
             product_id,
           };
         });
@@ -59,6 +61,7 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
+  let productsArr = JSON.parse(req.body.products);
   Tag.update(req.body, {
     where: {
       id: req.params.id,
@@ -72,7 +75,7 @@ router.put('/:id', (req, res) => {
       // get list of current tag_ids
       const productTagIds = productTags.map(({ product_id }) => product_id);
       // create filtered list of new tag_ids
-      const newProductTags = req.body.productIds
+      const newProductTags = productsArr
         .filter((product_id) => !productTagIds.includes(product_id))
         .map((product_id) => {
           return {
@@ -82,7 +85,7 @@ router.put('/:id', (req, res) => {
         });
       // figure out which ones to remove
       const productTagsToRemove = productTags
-        .filter(({ product_id }) => !req.body.productIds.includes(product_id))
+        .filter(({ product_id }) => !productsArr.includes(product_id))
         .map(({ id }) => id);
 
       // run both actions
@@ -106,8 +109,9 @@ router.delete('/:id', async (req, res) => {
         id: req.params.id,
       },
     });
+    res.status(200).json(tagData);
     if (!tagData) {
-      res.status(404).json({ message: 'Tag could ot be found with this id' })
+      res.status(404).json({ message: 'Tag could not be found' })
     }
   } catch (err) {
     res.status(500).json(err);
